@@ -1,0 +1,18 @@
+app:
+  name: go-ddd
+  port: 8080
+  mode: debug
+
+database:
+  host: localhost
+  port: 3306
+  username: root
+  password: root
+  database: go_ddd
+  max_idle_conns: 10
+  max_open_conns: 100
+
+jwt:
+  secret: your-super-secret-key-change-in-production
+  expire_hour: 24
+  issuer: go-ddd
