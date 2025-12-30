@@ -50,14 +50,16 @@ func (m *UserModel) ToEnitity() *entity.User {
 	}
 }
 
-func (m *UserModel) FromEntity(user *entity.User) {
-	m.ID = user.ID
-	m.UUID = user.UUID
-	m.Username = user.Username
-	m.Email = user.Email.String()
-	m.PasswordHash = user.Password.Hash()
-	m.Nickname = user.Nickname
-	m.Avatar = user.Avatar
-	m.Status = int(user.Status)
-	m.Role = string(user.Role)
+func FromEntity(user *entity.User) *UserModel {
+	return &UserModel{
+		ID:           user.ID,
+		UUID:         user.UUID,
+		Username:     user.Username,
+		Email:        user.Email.String(),
+		PasswordHash: user.Password.Hash(),
+		Nickname:     user.Nickname,
+		Avatar:       user.Avatar,
+		Status:       int(user.Status),
+		Role:         string(user.Role),
+	}
 }

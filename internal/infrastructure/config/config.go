@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/spf13/viper"
@@ -34,7 +35,7 @@ func (c *DatabaseConfig) DSN() string {
 }
 
 type JWTConfig struct {
-	secret     string `mapstructure:"secret"`
+	Secret     string `mapstructure:"secret"`
 	ExpireHour int    `mapstructure:"expire_hour"`
 	Issuer     string `mapstructure:"issuer"`
 }
@@ -46,7 +47,7 @@ func Load(configPath string) (*Config, error) {
 	viper.AutomaticEnv()
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
-	if err := viper.ReadConfig(); err != nil {
+	if err := viper.ReadConfig(os.Stdin); err != nil {
 		return nil, fmt.Errorf("failed to read config file: %w", err)
 	}
 

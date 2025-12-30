@@ -40,6 +40,14 @@ func NewAppError(code int, message string, err error) *AppError {
 	}
 }
 
+// Wrap 包装错误
+func Wrap(err error, message string) error {
+	if err == nil {
+		return nil
+	}
+	return fmt.Errorf("%s: %w", message, err)
+}
+
 func Wrapf(err error, format string, args ...interface{}) error {
 	if err == nil {
 		return nil

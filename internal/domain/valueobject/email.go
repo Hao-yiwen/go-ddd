@@ -23,6 +23,28 @@ func NewEmail(value string) (Email, error) {
 	return Email{value: email}, nil
 }
 
-func (e *Email) String() string {
+func (e Email) String() string {
 	return e.value
+}
+
+func (e Email) Equals(other Email) bool {
+	return e.value == other.value
+}
+
+// yiwen@gmail.com -> gmail.com
+func (e Email) Domain() string {
+	parts := strings.Split(e.value, "@")
+	if len(parts) < 2 {
+		return ""
+	}
+	return parts[1]
+}
+
+// yiwen@gmail.com -> yiwen
+func (e Email) LocalPart() string {
+	parts := strings.Split(e.value, "@")
+	if len(parts) < 2 {
+		return ""
+	}
+	return parts[0]
 }

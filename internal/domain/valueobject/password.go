@@ -8,10 +8,10 @@ import (
 )
 
 var (
-	ErrPasswordToShort      = errors.New("password must be at least 8 characters long")
-	ErrPasswordTooWeak      = errors.New("password is too weak")
-	ErrPasswordHashFailed   = errors.New("failed to hash password")
-	ErrPasswordVerifyFailed = errors.New("failed to verify password")
+	ErrPasswordToShort    = errors.New("password must be at least 8 characters long")
+	ErrPasswordTooWeak    = errors.New("password is too weak")
+	ErrPasswordHashFailed = errors.New("failed to hash password")
+	ErrPasswordMismatch   = errors.New("password mismatch")
 )
 
 // Password 密码值对象
@@ -44,6 +44,18 @@ func NewPasswordFromHash(hash string) Password {
 
 func (p *Password) Hash() string {
 	return p.hash
+}
+
+func (p *Password) Verify(plaintext string) error {
+	err := bcrypt.CompareHashAndPassword([]byte(p.hash), []byte(plaintext))
+	if err != nil {
+		return ErrPasswordMismatch
+	}
+	return nil
+}
+
+func (p *Password) IsEmpty() bool {
+	return p.hash == ""
 }
 
 // isStrongPassword 用于判断密码强度，要求包含大写字母、小写字母和数字。
